@@ -11,6 +11,8 @@ import (
 	"gopkg.in/mailgun/mailgun-go.v1"
 )
 
+var counter int
+
 type TRNResponse struct {
 	Error string  `json:"error"`
 	Code  float64 `json:"code"`
@@ -71,7 +73,6 @@ func heartBeat() {
 }
 
 func mailMe() {
-	var counter int
 
 	if counter == 0 {
 		mg := mailgun.NewMailgun("sandbox3fd66e607c004414a32485674ce9674f.mailgun.org", "key-81f9124c51b2a16192b5d546df0cae3b", "pubkey-27244492e5d0f52210d61f36ec18620c")
