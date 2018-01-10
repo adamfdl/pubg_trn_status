@@ -11,8 +11,6 @@ import (
 	"gopkg.in/mailgun/mailgun-go.v1"
 )
 
-var counter int
-
 type TRNResponse struct {
 	Error string  `json:"error"`
 	Code  float64 `json:"code"`
@@ -67,22 +65,17 @@ func heartBeat() {
 			logrus.Info(stringResponse)
 			fmt.Println("========================")
 
-			mailMe()
+			mailMe(stringResponse)
 		}
 	}
 }
 
-func mailMe() {
-
-	if counter == 0 {
-		mg := mailgun.NewMailgun("sandbox3fd66e607c004414a32485674ce9674f.mailgun.org", "key-81f9124c51b2a16192b5d546df0cae3b", "pubkey-27244492e5d0f52210d61f36ec18620c")
-		message := mg.NewMessage(
-			"no-reply@example.com",
-			"PUBG Tracker Network Bot Status",
-			"Go check your server now bitch",
-			"adamfdls@gmail.com")
-		mg.Send(message)
-	}
-
-	counter++
+func mailMe(stringResponse string) {
+	mg := mailgun.NewMailgun("sandbox3fd66e607c004414a32485674ce9674f.mailgun.org", "key-81f9124c51b2a16192b5d546df0cae3b", "pubkey-27244492e5d0f52210d61f36ec18620c")
+	message := mg.NewMessage(
+		"pubgtrnbot@gmail.com",
+		"PUBG Tracker Network Bot Status",
+		stringResponse,
+		"adamfdls@gmail.com")
+	mg.Send(message)
 }
